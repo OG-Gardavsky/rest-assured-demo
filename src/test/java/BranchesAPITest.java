@@ -1,7 +1,9 @@
 import io.github.cdimascio.dotenv.Dotenv;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.UUID;
@@ -50,6 +52,7 @@ public class BranchesAPITest {
         }
 
         if (validationSchemaFileName != null) {
+            response.contentType(ContentType.JSON);
             response.body(matchesJsonSchemaInClasspath(validationSchemaFileName));
         }
     }
@@ -60,16 +63,27 @@ public class BranchesAPITest {
 
     @Test
     public void getNearestBranches_Success() {
-        getNearestBranches(49, 14, 0, API_KEY, 200, "nearest_branches-schema.json", true);
+        getNearestBranches(49, 14, 0, API_KEY, 200, "nearest_branches-schema.json", false);
     }
+
 
     @Test
     public void getNearestBranches_emptyApikey() {
-        getNearestBranches(49, 14, 0, "", 401, "error-schema.json", true);
+        getNearestBranches(49, 14, 0, "", 401);
     }
 
     @Test
     public void getNearestBranches_invalidAPiKey() {
+        getNearestBranches(49, 14, 0, "invalid-api-key", 401);
+    }
+
+    @Test
+    public void getNearestBranches_emptyApikey_withSchema() {
+        getNearestBranches(49, 14, 0, "", 401, "error-schema.json", true);
+    }
+
+    @Test
+    public void getNearestBranches_invalidAPiKey_withSchema() {
         getNearestBranches(49, 14, 0, "invalid-api-key", 401, "error-schema.json", true);
     }
 
@@ -81,5 +95,10 @@ public class BranchesAPITest {
     @Test
     public void getNearestBranches_InvalidLongitude() {
         getNearestBranches(91, 14, 0, API_KEY, 400, "error-schema.json", false);
+    }
+
+    @Test
+    public void getNearestBranches_InvalidPage() {
+        getNearestBranches(49, 14, -1, API_KEY, 400, "error-schema.json", true);
     }
 }
