@@ -30,7 +30,7 @@ public class BranchesAPITest {
     }
 
 
-    private void getNearestBranches(double latitude, double longitude, int page, String apiKey, int expectedStatusCode, String validationSchemaFileName) {
+    private void getNearestBranches(double latitude, double longitude, int page, String apiKey, int expectedStatusCode, String validationSchemaFileName, boolean printResponse) {
         ValidatableResponse response = RestAssured
             .given()
                 .header("x-correlation-id", UUID.randomUUID())
@@ -44,37 +44,42 @@ public class BranchesAPITest {
                 .assertThat()
                 .statusCode(expectedStatusCode);
 
+        if(printResponse) {
+            System.out.println("content of response: \n ------------------------------");
+            response.log().all();
+        }
+
         if (validationSchemaFileName != null) {
             response.body(matchesJsonSchemaInClasspath(validationSchemaFileName));
         }
     }
 
     private void getNearestBranches(double latitude, double longitude, int page, String apiKey, int expectedStatusCode) {
-        getNearestBranches(latitude, longitude, page, apiKey, expectedStatusCode, null);
+        getNearestBranches(latitude, longitude, page, apiKey, expectedStatusCode, null, false);
     }
 
     @Test
     public void getNearestBranches_Success() {
-        getNearestBranches(49, 14, 0, API_KEY, 200, "nearest_branches-schema.json");
+        getNearestBranches(49, 14, 0, API_KEY, 200, "nearest_branches-schema.json", true);
     }
 
     @Test
     public void getNearestBranches_emptyApikey() {
-        getNearestBranches(49, 14, 0, "", 401);
+        getNearestBranches(49, 14, 0, "", 401, "error-schema.json", true);
     }
 
     @Test
     public void getNearestBranches_invalidAPiKey() {
-        getNearestBranches(49, 14, 0, "invalid-api-key", 401);
+        getNearestBranches(49, 14, 0, "invalid-api-key", 401, "error-schema.json", true);
     }
 
     @Test
     public void getNearestBranches_InvalidLatitude() {
-        getNearestBranches(49, 181, 0, API_KEY, 400);
+        getNearestBranches(49, 181, 0, API_KEY, 400, "error-schema.json", false);
     }
 
     @Test
     public void getNearestBranches_InvalidLongitude() {
-        getNearestBranches(91, 14, 0, API_KEY, 400);
+        getNearestBranches(91, 14, 0, API_KEY, 400, "error-schema.json", false);
     }
 }
