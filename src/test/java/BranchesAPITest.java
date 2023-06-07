@@ -30,7 +30,7 @@ public class BranchesAPITest {
     }
 
 
-    private void getNearestBranches(double latitude, double longitude, int page, String apiKey, int expectedStatusCode) {
+    private void getNearestBranches(double latitude, double longitude, int page, String apiKey, int expectedStatusCode, String validationSchemaFileName) {
         ValidatableResponse response = RestAssured
             .given()
                 .header("x-correlation-id", UUID.randomUUID())
@@ -44,11 +44,18 @@ public class BranchesAPITest {
                 .assertThat()
                 .statusCode(expectedStatusCode);
 
-        response.body(matchesJsonSchemaInClasspath("nearest_branches-schema.json"));
+        if (validationSchemaFileName != null) {
+            response.body(matchesJsonSchemaInClasspath(validationSchemaFileName));
+        }
     }
+
+    private void getNearestBranches(double latitude, double longitude, int page, String apiKey, int expectedStatusCode) {
+        getNearestBranches(latitude, longitude, page, apiKey, expectedStatusCode, null);
+    }
+
     @Test
     public void getNearestBranches_Success() {
-        getNearestBranches(49, 14, 0, API_KEY, 200);
+        getNearestBranches(49, 14, 0, API_KEY, 200, "nearest_branches-schema.json");
     }
 
     @Test
