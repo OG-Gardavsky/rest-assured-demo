@@ -1,0 +1,278 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "totalPages": {
+      "type": "integer"
+    },
+    "totalElements": {
+      "type": "integer"
+    },
+    "pageNumber": {
+      "type": "integer"
+    },
+    "pageSize": {
+      "type": "integer"
+    },
+    "numberOfElements": {
+      "type": "integer"
+    },
+    "first": {
+      "type": "boolean"
+    },
+    "last": {
+      "type": "boolean"
+    },
+    "empty": {
+      "type": "boolean"
+    },
+    "content": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "address": {
+              "type": "object",
+              "properties": {
+                "street": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "postCode": {
+                  "type": "integer"
+                },
+                "country": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "street",
+                "city",
+                "postCode",
+                "country"
+              ]
+            },
+            "gpsLocation": {
+              "type": "object",
+              "properties": {
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "latitude",
+                "longitude"
+              ]
+            },
+            "isOpen": {
+              "type": "boolean"
+            },
+            "isAccessible": {
+              "type": "boolean"
+            },
+            "openingHoursBranch": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "day": {
+                      "type": "string"
+                    },
+                    "intervals": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "string"
+                            },
+                            "to": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "from",
+                            "to"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "day",
+                    "intervals"
+                  ]
+                }
+              ]
+            },
+            "openingHoursCashdesk": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "day": {
+                      "type": "string"
+                    },
+                    "intervals": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "string"
+                            },
+                            "to": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "from",
+                            "to"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "day",
+                    "intervals"
+                  ]
+                }
+              ]
+            },
+            "hasAtm": {
+              "type": "boolean"
+            },
+            "atmType": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            "phone": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "cashLimitType": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            "isForeignLanguageFriendly": {
+              "type": "boolean"
+            },
+            "hasSafeDeposit": {
+              "type": "boolean"
+            },
+            "hasNightSafe": {
+              "type": "boolean"
+            },
+            "isWifiAvailable": {
+              "type": "boolean"
+            },
+            "isDeafFriendly": {
+              "type": "boolean"
+            },
+            "isCorporateServices": {
+              "type": "boolean"
+            },
+            "isEntrepreneurServices": {
+              "type": "boolean"
+            },
+            "exchangeType": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            "additionalInfo": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "addInfoText": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "addInfoText"
+                  ]
+                }
+              ]
+            },
+            "distance": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "id",
+            "address",
+            "gpsLocation",
+            "isOpen",
+            "isAccessible",
+            "openingHoursBranch",
+            "openingHoursCashdesk",
+            "hasAtm",
+            "atmType",
+            "phone",
+            "email",
+            "cashLimitType",
+            "isForeignLanguageFriendly",
+            "hasSafeDeposit",
+            "hasNightSafe",
+            "isWifiAvailable",
+            "isDeafFriendly",
+            "isCorporateServices",
+            "isEntrepreneurServices",
+            "exchangeType",
+            "additionalInfo",
+            "distance",
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "totalPages",
+    "totalElements",
+    "pageNumber",
+    "pageSize",
+    "numberOfElements",
+    "first",
+    "last",
+    "empty",
+    "content"
+  ]
+}

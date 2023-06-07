@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 
 import java.util.UUID;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 
 public class BranchesAPITest {
     private static final String BASE_URL = "https://api.kb.cz/open/api/touchpoints/v1";
@@ -41,6 +43,8 @@ public class BranchesAPITest {
             .then()
                 .assertThat()
                 .statusCode(expectedStatusCode);
+
+        response.body(matchesJsonSchemaInClasspath("nearest_branches-schema.json"));
     }
     @Test
     public void getNearestBranches_Success() {
